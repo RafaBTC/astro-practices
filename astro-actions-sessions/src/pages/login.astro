@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+//export const prerender = false
+
+---
+
+<Layout title="Login">
+  <h1 class="text-center text-4xl font-bold mb-10 pt-8">
+    Inicia sesión para poder acceder a tu dashboard
+  </h1>
+
+  <div class="flex justify-center items-center">
+    <form action="" class="bg-zinc-700 flex flex-col justify-center min-w-xl space-y-8 rounded-xl p-8">
+
+      <div class="flex flex-col gap-2">
+        <label for="email" class="text-sm font-medium">Correo</label>
+        <input id="email" type="email" class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"/>
+      </div>
+      
+      <div class="flex flex-col gap-2">
+        <label for="pass" class="text-sm font-medium">Contraseña</label>
+        <input type="password" class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"/>
+      </div>
+  
+      <button type="submit" class="bg-indigo-400 hover:bg-indigo-500 cursor-pointer transition duration-300 rounded-full px-4 py-2">
+        Iniciar sesión
+      </button>
+  
+    </form>
+  </div>
+</Layout>
