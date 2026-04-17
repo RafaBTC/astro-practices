@@ -3,7 +3,7 @@ import type { User } from "../types";
 
 export const userService = {
   async getProfile(token: string) {
-    return httpClient.get("/users/profile", token);
+    return httpClient.get<User>("/users/profile", token);
   },
 
   async updateProfile(token: string, data: Partial<User>) {

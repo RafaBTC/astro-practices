@@ -1,8 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getSessionManager } from "../lib/session";
 
 //export const prerender = false
+const errorMessage = Astro.url.searchParams.get('error')
+const redirect = Astro.url.searchParams.get('redirect') || '/dashboard'
 
+//si ya está auth, redirigir en caso de que middleware falle
+const sessionManager = getSessionManager(Astro.cookies)
+if(sessionManager.isAuthenticated()){
+  Astro.redirect('/dashboard')
+}
 ---
 
 <Layout title="Login">
@@ -10,17 +18,36 @@ import Layout from "../layouts/Layout.astro";
     Inicia sesión para poder acceder a tu dashboard
   </h1>
 
+  {errorMessage && (
+    <div class="p-4 bg-blue-800 text-green-950 rounded-sm mb-4">{errorMessage}</div>
+  )}
+
   <div class="flex justify-center items-center">
-    <form action="" class="bg-zinc-700 flex flex-col justify-center min-w-xl space-y-8 rounded-xl p-8">
+    <form method="POST" action="/api/auth/login" class="bg-zinc-700 flex flex-col justify-center min-w-xl space-y-8 rounded-xl p-8">
+      <input type="hidden" name="redirect" value={redirect}>
 
       <div class="flex flex-col gap-2">
         <label for="email" class="text-sm font-medium">Correo</label>
-        <input id="email" type="email" class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"/>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          required
+          autocomplete="email"
+          class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"
+        />
       </div>
       
       <div class="flex flex-col gap-2">
         <label for="pass" class="text-sm font-medium">Contraseña</label>
-        <input type="password" class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"/>
+        <input 
+          type="password" 
+          id="pass"
+          name="pass"
+          required
+          autocomplete="current-password"
+          class="text-gray-700 bg-white appearance-none border border-gray-300 rounded-lg px-4 py-2 focus:outline-2 focus:outline-indigo-400"
+        />
       </div>
   
       <button type="submit" class="bg-indigo-400 hover:bg-indigo-500 cursor-pointer transition duration-300 rounded-full px-4 py-2">

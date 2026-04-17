@@ -1,12 +1,52 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { userService } from "../services/userService";
 console.log(Astro.locals)
 
-export const prerender = false
+
+//el middleware nos garantiza sesión
+const { session, user } = Astro.locals;
+//tmb podemos obtener directamente cosas del backend aquí xd
+const profileResponse = await userService.getProfile(session!.token);
+
+if(!profileResponse.success){
+  //Manejar error
+  return Astro.redirect('/login?error=Sesión expirada')
+}
+
+const profile = profileResponse.data;
 ---
 
-<Layout title="USER_HOME">
-  <h1>
-    HOLA BIENVENIDO
-  </h1>
+<Layout title="Dashboard">
+  <div class="bg-blue-950">
+    <header>
+      <h1>
+        Bienvenido, {user!.name}
+      </h1>
+      <form method="POST" action="/api/auth/logout">
+        <button type="submit">Cerrar sesión</button>
+      </form>
+    </header>
+
+    <main>
+      <section>
+        <h2>Tu perfil</h2>
+        <p>
+          <strong>Email:</strong> {profile!.email}
+        </p>
+        <p>
+          <strong>Role:</strong> {profile!.role}
+        </p>
+      </section>
+
+      <section>
+        <h2>Acciones Rápidas</h2>
+        <a href="/profile">Editar perfil</a>
+        {user!.role === 'admin' && (
+          <a href="/admin">Panle de administración</a>
+        )}
+      </section>
+    </main>
+    
+  </div>
 </Layout>
