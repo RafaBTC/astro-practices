@@ -1,22 +1,24 @@
 ---
-import Products from '../components/Products.tsx';
-import Layout from '../layouts/Layout.astro';
+import Products from '../components/Products.tsx'
+import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-
-  <h1 class="text-center text-3xl font-bold py-4">
+  <h1 class="py-4 text-center text-3xl font-bold">
     ¡Bienvenido a mi tienda en línea!
   </h1>
 
-  <div class="flex items-center justify-center gap-4 my-8">
-      <a href="#productos" class="hover:underline underline-offset-1 transition">
-        Ver productos
-      </a>
-    
-      <a href="/login" class="bg-violet-600 px-4 py-2 rounded-lg transition hover:bg-violet-800">
-        Iniciar sesión
-      </a>
+  <div class="my-8 flex items-center justify-center gap-4">
+    <a href="#productos" class="underline-offset-1 transition hover:underline">
+      Ver productos
+    </a>
+
+    <a
+      href="/login"
+      class="rounded-lg bg-violet-600 px-4 py-2 transition hover:bg-violet-800"
+    >
+      Iniciar sesión
+    </a>
   </div>
 
   <section id="productos" class="grid grid-cols-3 gap-8">

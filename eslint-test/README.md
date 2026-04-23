@@ -1,40 +1,4 @@
-# Práctica: Sesiones y carrito
-
-El objetivo de este proyecto es **practicar las diferentes formas de iniciar sesión con Astro y hacer un carrito** que pueda añadir productos, eliminar y que se guarde de manera local.
-
-**Igualmente, el objetivo es lograr lo siguente:**
-
-- Configurar el ESLint con un estandar o airbnb de base
-- Documentar la arq del proyecto
-- Crear un carrito con nanostores
-- Poder añadir productos
-- Poder eliminar productos
-- Hacer que el carrito se quede guardado (cookies o local storage)
-- Poder iniciar sesión (fake)
-- Probar a Implementar Better Auth
-- Mantener la sesión en cookies o local storage
-- Añadir rutas protegidas con un Middleware
-- Probar a implementar los diferentes tipos de testing
-- Probar a llamar a una API
-- **DOCUMENTAR LOS APRENDIZAJES**
-
-```
-CONFIGURACIÓN DE ESLINT:
-
-La mejor estrategia combina ESLint (linting de JS/TS/JSX), Prettier (formateo) y opcionalmente Stylelint (CSS). Así queda el stack recomendado:
-
-npm install --save-dev \
-  eslint \
-  eslint-plugin-astro \
-  @typescript-eslint/parser \
-  eslint-plugin-jsx-a11y \
-  eslint-plugin-react \
-  eslint-plugin-react-hooks
-```
-
-<!--
-
-
+# Astro Starter Kit: Basics
 
 ```sh
 npm create astro@latest -- --template basics
@@ -79,4 +43,4 @@ All commands are run from the root of the project, from a terminal:
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat). -->
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
