@@ -5,6 +5,24 @@ El objetivo de este proyecto es **practicar las diferentes formas de iniciar ses
 **Igualmente, el objetivo es lograr lo siguente:**
 
 - Configurar el ESLint con un estandar o airbnb de base
+
+### Pasos para instalar ESLint:
+1. Instalar los siguientes paquetes:
+```
+npm install --save-dev eslint prettier eslint-plugin-astro eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y @typescript-eslint/parser @typescript-eslint/eslint-plugin prettier-plugin-astro prettier-plugin-tailwindcss eslint-config-prettier
+```
+
+2. Crear archivo 
+```
+eslint.config.ts
+```
+
+3. Empezar a configurar el archivo
+```
+
+```
+
+
 - Documentar la arq del proyecto
 - Crear un carrito con nanostores
 - Poder añadir productos

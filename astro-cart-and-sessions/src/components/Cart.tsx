@@ -11,7 +11,11 @@ export default function Cart() {
       className={`fixed z-999 w-100 rounded-2xl bg-slate-600 ${$isCartOpen ? "block" : "hidden"} top-20 right-8 p-4 transition-all duration-300 h-80 max-h-80 flex flex-col justify-between`}
     >
       {Object.values($cartItems).length ? (
+
+
         <ul className="space-y-4">
+
+
           {Object.values($cartItems).map(
             ({ id, image, name, price, currency, quantity }) => (
               <li key={id} className="flex gap-4">
@@ -23,7 +27,9 @@ export default function Cart() {
                       className="w-16 h-auto object-cover"
                     />
                   </div>
-                  <div>
+
+
+                  <div   >
                     <h3 className="font-bold">{name}</h3>
                     <div className="flex justify-between">
                       <p>Quantity: {quantity} </p>
