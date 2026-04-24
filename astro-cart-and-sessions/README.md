@@ -18,9 +18,46 @@ eslint.config.ts
 ```
 
 3. Empezar a configurar el archivo
-```
+*Después de como una hora, he logrado hacer funcionar el ESLINT, se debe de hacer referencia a las reglas que aquí se explican, ya que los plugins no dan nada más:
+https://eslint.org/docs/latest/rules
+*
+
+4. Seguir customizando el archivo hasta hacerlo lo más amigable y como lo queremos posible
+
+5. Ejecutar
 
 ```
+npm run lint
+```
+Para ver los errores de ESLINT
+
+6. Ejecutar 
+
+```
+npm run lint: fix
+```
+Con --fix se corregiran todos los problemas de formato y se conseguirá el estandar siempre
+
+(Lo mismo para Prettier)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 - Documentar la arq del proyecto

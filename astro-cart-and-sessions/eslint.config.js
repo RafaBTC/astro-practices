@@ -1,10 +1,10 @@
 import globals from 'globals'
-import eslintPluginAstro from 'eslint-plugin-astro';
-import reactPlugin from 'eslint-plugin-react';
-import tsEslint from 'typescript-eslint';
-import importPlugin from 'eslint-plugin-import';
-import tsParser from '@typescript-eslint/parser';
-import astroParser from 'astro-eslint-parser';
+import eslintPluginAstro from 'eslint-plugin-astro'
+import reactPlugin from 'eslint-plugin-react'
+import tsEslint from 'typescript-eslint'
+import importPlugin from 'eslint-plugin-import'
+import tsParser from '@typescript-eslint/parser'
+import astroParser from 'astro-eslint-parser'
 
 export default [
   // Ignorar node_modules y dist
@@ -30,15 +30,58 @@ export default [
     },
     rules: {
       // Estilos de código
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'semi': ['error', 'always'],
-      'indent': ['error', 2],
+      quotes: ['error', 'single', { avoidEscape: true }],
+      'jsx-quotes': ['error', 'prefer-single'],
+      semi: ['error', 'always'],
+      indent: ['error', 2],
       'comma-dangle': ['error', 'never'],
       'no-console': 'warn',
+      'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
+      'no-trailing-spaces': 'error',
+      'eol-last': ['error', 'always'],
+
+      // Naming conventions
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'default',
+          format: ['camelCase']
+        },
+        {
+          selector: ['class', 'interface', 'typeParameter', 'typeAlias'],
+          format: ['PascalCase']
+        },
+        {
+          selector: ['objectLiteralProperty', 'objectLiteralMethod'],
+          format: null
+        },
+        {
+          selector: ['enum', 'enumMember'],
+          format: ['PascalCase', 'snake_case']
+        },
+        {
+          selector: 'parameter',
+          format: ['camelCase'],
+          leadingUnderscore: 'allow'
+        },
+        {
+          selector: 'variable',
+          format: ['UPPER_CASE', 'camelCase'],
+          leadingUnderscore: 'allow'
+        },
+        {
+          selector: 'typeProperty',
+          format: null,
+          filter: {
+            regex: '^_count$',
+            match: true
+          }
+        }
+      ],
 
       // Imports
       'import/order': [
-        'warn',
+        'error',
         {
           groups: [
             'builtin',
@@ -100,8 +143,12 @@ export default [
       'astro/no-unused-css-selector': 'warn',
       'astro/prefer-class-list-directive': 'warn',
       // Estilos de código en archivos Astro
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'semi': ['error', 'always']
+      quotes: ['error', 'single', { avoidEscape: true }],
+      'jsx-quotes': ['error', 'prefer-single'],
+      semi: ['error', 'always'],
+      'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
+      'no-trailing-spaces': 'error',
+      'eol-last': ['error', 'always']
     }
   }
 ]
