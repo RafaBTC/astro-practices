@@ -1,18 +1,44 @@
-import globals from 'globals'
-import eslintPluginAstro from 'eslint-plugin-astro'
-import reactPlugin from 'eslint-plugin-react'
-import tsEslint from 'typescript-eslint'
-import importPlugin from 'eslint-plugin-import'
 import tsParser from '@typescript-eslint/parser'
 import astroParser from 'astro-eslint-parser'
+import prettierConfig from 'eslint-config-prettier'
+import eslintPluginAstro from 'eslint-plugin-astro'
+import importPlugin from 'eslint-plugin-import'
+import prettierPlugin from 'eslint-plugin-prettier'
+import reactPlugin from 'eslint-plugin-react'
+import reactHooksPlugin from 'eslint-plugin-react-hooks'
+import globals from 'globals'
+import tsEslint from 'typescript-eslint'
+
+// ─── Reglas compartidas de lógica (NO formato — eso lo maneja Prettier) ───────
+const sharedLogicRules = {
+  'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+  'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
+  'no-multi-spaces': 'error'
+}
+
+// ─── Reglas de imports ────────────────────────────────────────────────────────
+const importRules = {
+  'import/order': [
+    'error',
+    {
+      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+      'newlines-between': 'always',
+      alphabetize: {
+        order: 'asc',
+        caseInsensitive: true
+      }
+    }
+  ]
+}
 
 export default [
-  // Ignorar node_modules y dist
-  {
-    ignores: ['node_modules/', 'dist/', '.astro/']
-  },
+  // ─── Ignorados ──────────────────────────────────────────────────────────────
+  { ignores: ['node_modules/', 'dist/', '.astro/'] },
 
-  // Reglas globales para archivos JS/TS
+  // ─── Base TypeScript (primero, para que nuestras reglas puedan hacer override) ──
+  ...tsEslint.configs.recommended,
+
+  // ─── JS / TS / JSX / TSX ────────────────────────────────────────────────────
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
@@ -26,27 +52,47 @@ export default [
     },
     plugins: {
       react: reactPlugin,
-      import: importPlugin
+      import: importPlugin,
+      'react-hooks': reactHooksPlugin
     },
     rules: {
-      // Estilos de código
-      quotes: ['error', 'single', { avoidEscape: true }],
-      'jsx-quotes': ['error', 'prefer-single'],
-      semi: ['error', 'always'],
-      indent: ['error', 2],
-      'comma-dangle': ['error', 'never'],
-      'no-console': 'warn',
-      'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
-      'no-trailing-spaces': 'error',
-      'eol-last': ['error', 'always'],
+      ...sharedLogicRules,
+      ...importRules,
 
-      // Naming conventions
+      // React
+      ...reactPlugin.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'react/jsx-no-duplicate-props': 'error',
+
+      // TypeScript unused vars (override del recommended)
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+
+      //reglas de react hooks
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn'
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    }
+  },
+
+  // ─── Naming conventions (solo TS/TSX) ───────────────────────────────────────
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
       '@typescript-eslint/naming-convention': [
         'error',
-        {
-          selector: 'default',
-          format: ['camelCase']
-        },
+        { selector: 'default', format: ['camelCase', 'PascalCase'] },
         {
           selector: ['class', 'interface', 'typeParameter', 'typeAlias'],
           format: ['PascalCase']
@@ -72,60 +118,13 @@ export default [
         {
           selector: 'typeProperty',
           format: null,
-          filter: {
-            regex: '^_count$',
-            match: true
-          }
+          filter: { regex: '^_count$', match: true }
         }
-      ],
-
-      // Imports
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index'
-          ],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true
-          }
-        }
-      ],
-
-      // React
-      ...reactPlugin.configs.recommended.rules,
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off'
-    },
-    settings: {
-      react: { version: 'detect' }
+      ]
     }
   },
 
-  // TypeScript
-  ...tsEslint.configs.recommended,
-  {
-    files: ['**/*.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_'
-        }
-      ],
-      '@typescript-eslint/no-explicit-any': 'warn'
-    }
-  },
-
-  // Archivos Astro
+  // ─── Astro ──────────────────────────────────────────────────────────────────
   ...eslintPluginAstro.configs.recommended,
   {
     files: ['**/*.astro'],
@@ -139,16 +138,22 @@ export default [
       }
     },
     rules: {
+      ...sharedLogicRules,
       'astro/no-set-html-directive': 'error',
       'astro/no-unused-css-selector': 'warn',
-      'astro/prefer-class-list-directive': 'warn',
-      // Estilos de código en archivos Astro
-      quotes: ['error', 'single', { avoidEscape: true }],
-      'jsx-quotes': ['error', 'prefer-single'],
-      semi: ['error', 'always'],
-      'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 1 }],
-      'no-trailing-spaces': 'error',
-      'eol-last': ['error', 'always']
+      'astro/prefer-class-list-directive': 'warn'
     }
-  }
+  },
+
+  // ─── Prettier (siempre al final — desactiva reglas de formato en ESLint) ────
+  {
+    plugins: {
+      prettier: prettierPlugin
+    },
+    rules: {
+      'prettier/prettier': 'warn'
+    }
+  },
+
+  prettierConfig
 ]

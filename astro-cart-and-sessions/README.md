@@ -40,31 +40,12 @@ Con --fix se corregiran todos los problemas de formato y se conseguirá el estan
 
 (Lo mismo para Prettier)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Checklist de la practica
 - Documentar la arq del proyecto
-- Crear un carrito con nanostores
-- Poder añadir productos
-- Poder eliminar productos
-- Hacer que el carrito se quede guardado (cookies o local storage)
+- Crear un carrito con nanostores ✅
+- Poder añadir productos ✅
+- Poder eliminar productos ✅
+- Hacer que el carrito se quede guardado (cookies o local storage) ✅
 - Poder iniciar sesión (fake)
 - Probar a Implementar Better Auth
 - Mantener la sesión en cookies o local storage

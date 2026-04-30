@@ -1,12 +1,14 @@
-export interface Product {
+export interface CartItem {
   id: string
   name: string
   price: number
   currency: string
   image: string
   description: string
+  quantity: number
 }
 
-export interface CartItem extends Product {
-  quantity: number
+export interface Cart {
+  items: CartItem[]
+  total: number
 }

@@ -1,26 +1,32 @@
 ---
-import Header from '../components/Header';
-import Cart from '../components/Cart';
-import '../styles/global.css';
-import { Icon } from 'astro-icon/components';
+import Header from '../components/Header'
+import Cart from '../components/Cart'
+import '../styles/global.css'
+import { Icon } from 'astro-icon/components'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <link rel='icon' href='/favicon.ico' />
+    <meta name='generator' content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
   <body>
-    <Header client:load>
-      <Icon name="ri:shopping-cart-2-line" />
+    <Header client:only='react'>
+      <Icon name='ri:shopping-cart-2-line' />
+      <div
+        slot='fallback'
+        class='fixed top-0 flex h-16 w-full items-center justify-center bg-indigo-900'
+      >
+        <a href='/' class='text-center text-4xl font-bold'>Retro Store</a>
+      </div>
     </Header>
-    <Cart client:idle />
-    <main class="bg-gray- container mx-auto max-w-6xl p-4">
+    <Cart client:only='react' />
+    <main class='container mx-auto max-w-6xl p-4 mt-16'>
       <slot />
     </main>
   </body>
